@@ -20,6 +20,7 @@ class MainApp {
     static Usuario usuarioActual;
 
     public static void main(String[] args) {
+        baseDatos.cargarUsuarios();
         mostrarInicioSesion();
     }
 
@@ -37,12 +38,15 @@ class MainApp {
     }
 
     public static void registrarUsuario() {
-        String nombreUsuario = JOptionPane.showInputDialog("Ingrese nombre de usuario:");
-        String contrasena = JOptionPane.showInputDialog("Ingrese contraseña:");
-        String nombreCompleto = JOptionPane.showInputDialog("Ingrese nombre completo:");
-        String correo = JOptionPane.showInputDialog("Ingrese correo electrónico:");
+        String nombreUsuario = JOptionPane.showInputDialog("Ingrese el nombre del usuario:");
+        String contrasena = JOptionPane.showInputDialog("Ingrese la contraseña:");
+        String nombreCompleto = JOptionPane.showInputDialog("Ingrese el nombre completo:");
+        String correo = JOptionPane.showInputDialog("Ingrese el correo electrónico:");
+
         baseDatos.agregarUsuario(new Usuario(nombreUsuario, contrasena, nombreCompleto, correo));
-        JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
+        baseDatos.guardarUsuarios();
+
+        JOptionPane.showMessageDialog(null, "El usuario fue registrado correctamente");
     }
 
     public static void iniciarSesion() {
@@ -75,7 +79,7 @@ class MainApp {
 
     public static void seleccionarGrupoMuscular() {
         String[] grupos = {"Pecho", "Espalda", "Brazos", "Abdominales", "Piernas", "Hombros"};
-        String seleccion = (String) JOptionPane.showInputDialog(null, "Seleccione grupo muscular:",
+        String seleccion = (String) JOptionPane.showInputDialog(null, "Seleccione el grupo muscular a trabajar:",
                 "Grupos Musculares", JOptionPane.QUESTION_MESSAGE, null, grupos, grupos[0]);
 
         ArrayList<? extends Ejercicio> lista = new ArrayList<>();
@@ -132,6 +136,3 @@ class MainApp {
         }
     }
 }
-
-
-

@@ -8,38 +8,42 @@ package app_fidness;
  *
  * @author Osvaldo
  */
+import java.io.*;
 import java.util.ArrayList;
 
-class BaseDatosUsuario {
+public class BaseDatosUsuario implements Serializable {
+    private static final long serialVersionUID = 1L;
     private ArrayList<Usuario> listaUsuarios;
+    private static final String ARCHIVO = "usuarios.dat";
 
     public BaseDatosUsuario() {
         listaUsuarios = new ArrayList<>();
     }
 
-    public void agregarUsuario(Usuario u) {
-        listaUsuarios.add(u);
-    }
-
-    public Usuario buscarUsuario(String nombreUsuario) {
-        for (Usuario u : listaUsuarios) {
-            if (u.getNombreUsuario().equals(nombreUsuario)) {
-                return u;
-            }
-        }
-        return null;
-    }
-
-    public boolean validarLogin(String usuario, String clave) {
-        for (Usuario u : listaUsuarios) {
-            if (u.verificarCredenciales(usuario, clave)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public ArrayList<Usuario> getListaUsuarios() {
         return listaUsuarios;
+    }
+
+    public void agregarUsuario(Usuario usuario) {
+        listaUsuarios.add(usuario);
+    }
+
+    public void guardarUsuarios() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
+            oos.writeObject(listaUsuarios);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void cargarUsuarios() {
+        File archivo = new File(ARCHIVO);
+        if (archivo.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
+                listaUsuarios = (ArrayList<Usuario>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
