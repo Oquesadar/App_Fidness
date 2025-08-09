@@ -8,7 +8,11 @@ package app_fidness;
  *
  * @author Osvaldo
  */
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String nombreUsuario;
     private String contrasena;
     private String nombreCompleto;
@@ -21,16 +25,16 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
     }
 
-    public boolean verificarCredenciales(String usuario, String clave) {
-        return this.nombreUsuario.equals(usuario) && this.contrasena.equals(clave);
-    }
-
     public String getNombreUsuario() {
         return nombreUsuario;
     }
 
     public String getNombreCompleto() {
         return nombreCompleto;
+    }
+
+    public boolean verificarCredenciales(String usuario, String clave) {
+        return this.nombreUsuario.equals(usuario) && this.contrasena.equals(clave);
     }
 }
 
