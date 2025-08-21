@@ -20,7 +20,6 @@ class MainApp {
     static Usuario usuarioActual;
 
     public static void main(String[] args) {
-        baseDatos.cargarUsuarios();
         mostrarInicioSesion();
     }
 
@@ -43,8 +42,8 @@ class MainApp {
         String nombreCompleto = JOptionPane.showInputDialog("Ingrese el nombre completo:");
         String correo = JOptionPane.showInputDialog("Ingrese el correo electrónico:");
 
-        baseDatos.agregarUsuario(new Usuario(nombreUsuario, contrasena, nombreCompleto, correo));
-        baseDatos.guardarUsuarios();
+        Usuario nuevo = new Usuario(nombreUsuario, contrasena, nombreCompleto, correo);
+        baseDatos.insertarUsuario(nuevo);
 
         JOptionPane.showMessageDialog(null, "El usuario fue registrado correctamente");
     }
@@ -53,14 +52,13 @@ class MainApp {
         String usuario = JOptionPane.showInputDialog("Usuario:");
         String clave = JOptionPane.showInputDialog("Contraseña:");
 
-        for (Usuario u : baseDatos.getListaUsuarios()) {
-            if (u.verificarCredenciales(usuario, clave)) {
-                usuarioActual = u;
-                mostrarMenuPrincipal();
-                return;
-            }
+        Usuario u = baseDatos.buscarUsuario(usuario);
+        if (u != null && u.getContrasena().equals(clave)) {
+            usuarioActual = u;
+            mostrarMenuPrincipal();
+        } else {
+            JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
         }
-        JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
     }
 
     public static void mostrarMenuPrincipal() {
@@ -136,3 +134,4 @@ class MainApp {
         }
     }
 }
+
