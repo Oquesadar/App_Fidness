@@ -8,33 +8,36 @@ package app_fidness;
  *
  * @author Osvaldo
  */
-import java.io.Serializable;
-
-public class Usuario implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class Usuario {
     private String nombreUsuario;
     private String contrasena;
     private String nombreCompleto;
-    private String correoElectronico;
+    private String correo;
 
-    public Usuario(String nombreUsuario, String contrasena, String nombreCompleto, String correoElectronico) {
+    public Usuario(String nombreUsuario, String contrasena, String nombreCompleto, String correo) {
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.nombreCompleto = nombreCompleto;
-        this.correoElectronico = correoElectronico;
+        this.correo = correo;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
+    public String getNombreUsuario() { return nombreUsuario; }
+    public String getContrasena() { return contrasena; }
+    public String getNombreCompleto() { return nombreCompleto; }
+    public String getCorreo() { return correo; }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
+    public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
+    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
+    public void setNombreCompleto(String nombreCompleto) { this.nombreCompleto = nombreCompleto; }
+    public void setCorreo(String correo) { this.correo = correo; }
 
-    public boolean verificarCredenciales(String usuario, String clave) {
-        return this.nombreUsuario.equals(usuario) && this.contrasena.equals(clave);
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "nombreUsuario='" + nombreUsuario + '\'' +
+                ", nombreCompleto='" + nombreCompleto + '\'' +
+                ", correo='" + correo + '\'' +
+                '}';
     }
 }
 
