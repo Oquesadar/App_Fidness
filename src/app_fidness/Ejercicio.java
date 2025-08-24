@@ -12,11 +12,25 @@ abstract class Ejercicio {
     protected String nombre;
     protected String descripcion;
     protected String grupoMuscular;
+    protected String rutaImagen;
 
-    public Ejercicio(String nombre, String descripcion, String grupoMuscular) {
+    public Ejercicio(String nombre, String descripcion, String grupoMuscular, String rutaImagen) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.grupoMuscular = grupoMuscular;
+        this.rutaImagen = rutaImagen;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getRutaImagen() {
+        return rutaImagen;
     }
 
     public abstract void mostrarDetalle();

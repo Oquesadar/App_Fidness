@@ -11,14 +11,14 @@ package app_fidness;
 import java.util.ArrayList;
 
 class EjercicioHombros extends Ejercicio {
-    public EjercicioHombros(String nombre, String descripcion) {
-        super(nombre, descripcion, "Hombros");
+    public EjercicioHombros(String nombre, String descripcion, String rutaImagen) {
+        super(nombre, descripcion, "Hombros", rutaImagen);
     }
 
     public static ArrayList<EjercicioHombros> obtenerEjercicios() {
         ArrayList<EjercicioHombros> lista = new ArrayList<>();
-        lista.add(new EjercicioHombros("Elevación lateral con mancuernas", "Con una mancuerna en cada mano, elévalas lateralmente hasta la altura de los hombros con codos ligeramente flexionados, luego baja controladamente. Duración recomendada: 3 series de 12 repeticiones"));
-        lista.add(new EjercicioHombros("Aperturas para deltoides posteriores con polea baja inclinado hacia adelante", "Inclinado hacia adelante, tira de los cables hacia los lados con codos semi-flexionados sin juntar los omóplatos excesivamente. Duración recomendada: 3 series de 12 repeticiones."));
+        lista.add(new EjercicioHombros("Elevación lateral con mancuernas", "Con una mancuerna en cada mano, elévalas lateralmente hasta la altura de los hombros con codos ligeramente flexionados, luego baja controladamente. Duración recomendada: 3 series de 12 repeticiones", "/Imagenes/Elevación_mancuernas.jpg"));
+        lista.add(new EjercicioHombros("Aperturas para deltoides posteriores con polea baja inclinado hacia adelante", "Inclinado hacia adelante, tira de los cables hacia los lados con codos semi-flexionados sin juntar los omóplatos excesivamente. Duración recomendada: 3 series de 12 repeticiones.", "/Imagenes/Apertura_deltoides.jpg"));
         return lista;
     }
 
