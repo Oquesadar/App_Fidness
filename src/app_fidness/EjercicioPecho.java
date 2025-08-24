@@ -11,14 +11,14 @@ package app_fidness;
 import java.util.ArrayList;
 
 class EjercicioPecho extends Ejercicio {
-    public EjercicioPecho(String nombre, String descripcion) {
-        super(nombre, descripcion, "Pecho");
+    public EjercicioPecho(String nombre, String descripcion, String rutaImagen) {
+        super(nombre, descripcion, "Pecho", rutaImagen);
     }
 
     public static ArrayList<EjercicioPecho> obtenerEjercicios() {
         ArrayList<EjercicioPecho> lista = new ArrayList<>();
-        lista.add(new EjercicioPecho("Press de banca con mancuernas", "Acostado en un banco plano con una mancuerna en cada mano, bájalas lentamente hasta que estén a la altura del pecho y luego presiónalas hacia arriba contrayendo el pecho. Duración recomendada: 4 series de 10 repeticiones"));
-        lista.add(new EjercicioPecho("Press de banca inclinado", "Acostado en un banco inclinado, baja la barra hasta el pecho manteniendo la espalda tensa y luego empuja hacia arriba con fuerza desde los pies y los brazos. Duración recomendada: 4 series de 8-10 repeticiones"));
+        lista.add(new EjercicioPecho("Press de banca con mancuernas", "Acostado en un banco plano con una mancuerna en cada mano, bájalas lentamente hasta que estén a la altura del pecho y luego presiónalas hacia arriba contrayendo el pecho. Duración recomendada: 4 series de 10 repeticiones", "/Imagenes/Press_banca_mancuernas.jpg"));
+        lista.add(new EjercicioPecho("Press de banca inclinado", "Acostado en un banco inclinado, baja la barra hasta el pecho manteniendo la espalda tensa y luego empuja hacia arriba con fuerza desde los pies y los brazos. Duración recomendada: 4 series de 8-10 repeticiones", "/Imagenes/Press_banca_inclinado.jpg"));
         return lista;
     }
 

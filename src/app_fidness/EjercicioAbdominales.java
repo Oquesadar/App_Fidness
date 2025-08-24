@@ -11,14 +11,14 @@ package app_fidness;
 import java.util.ArrayList;
 
 class EjercicioAbdominales extends Ejercicio {
-    public EjercicioAbdominales(String nombre, String descripcion) {
-        super(nombre, descripcion, "Abdominales");
+    public EjercicioAbdominales(String nombre, String descripcion, String rutaImagen) {
+        super(nombre, descripcion, "Abdominales", rutaImagen);
     }
 
     public static ArrayList<EjercicioAbdominales> obtenerEjercicios() {
         ArrayList<EjercicioAbdominales> lista = new ArrayList<>();
-        lista.add(new EjercicioAbdominales("Crunch abdominal", "Acostado con rodillas flexionadas y manos al pecho, eleva el torso hasta estar perpendicular al suelo y baja lentamente. Duración recomendada: 3 series de 20 repeticiones"));
-        lista.add(new EjercicioAbdominales("Crunch con peso", "Acostado con las rodillas a 90°, sostén un disco sobre el pecho y elévalo hacia los pies contrayendo el abdomen. Duración recomendada: 3 series de 15 repeticiones"));
+        lista.add(new EjercicioAbdominales("Crunch abdominal", "Acostado con rodillas flexionadas y manos al pecho, eleva el torso hasta estar perpendicular al suelo y baja lentamente. Duración recomendada: 3 series de 20 repeticiones", "/Imagenes/Crunch_abdominal.jpg"));
+        lista.add(new EjercicioAbdominales("Crunch con peso", "Acostado con las rodillas a 90°, sostén un disco sobre el pecho y elévalo hacia los pies contrayendo el abdomen. Duración recomendada: 3 series de 15 repeticiones", "/Imagenes/Crunch_con_peso.jpg"));
         return lista;
     }
 

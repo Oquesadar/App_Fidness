@@ -10,6 +10,11 @@ package app_fidness;
  */
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -98,38 +103,88 @@ class MainApp {
     }
 
     public static void seleccionarGrupoMuscular() {
-        String[] grupos = {"Pecho", "Espalda", "Brazos", "Abdominales", "Piernas", "Hombros"};
-        String seleccion = (String) JOptionPane.showInputDialog(null, "Seleccione el grupo muscular a trabajar:",
-                "Grupos Musculares", JOptionPane.QUESTION_MESSAGE, null, grupos, grupos[0]);
-        if (seleccion == null) return;
+    String[] grupos = {"Pecho", "Espalda", "Brazos", "Abdominales", "Piernas", "Hombros"};
+    String seleccion = (String) JOptionPane.showInputDialog(
+            null,
+            "Seleccione el grupo muscular a trabajar:",
+            "Grupos Musculares",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            grupos,
+            grupos[0]
+    );
+    if (seleccion == null) return;
 
-        ArrayList<? extends Ejercicio> lista = new ArrayList<>();
-        if (seleccion.equals("Pecho")) lista = EjercicioPecho.obtenerEjercicios();
-        else if (seleccion.equals("Espalda")) lista = EjercicioEspalda.obtenerEjercicios();
-        else if (seleccion.equals("Brazos")) lista = EjercicioBrazos.obtenerEjercicios();
-        else if (seleccion.equals("Abdominales")) lista = EjercicioAbdominales.obtenerEjercicios();
-        else if (seleccion.equals("Piernas")) lista = EjercicioPiernas.obtenerEjercicios();
-        else if (seleccion.equals("Hombros")) lista = EjercicioHombros.obtenerEjercicios();
+    ArrayList<? extends Ejercicio> lista = new ArrayList<>();
+    if (seleccion.equals("Pecho")) lista = EjercicioPecho.obtenerEjercicios();
+    else if (seleccion.equals("Espalda")) lista = EjercicioEspalda.obtenerEjercicios();
+    else if (seleccion.equals("Brazos")) lista = EjercicioBrazos.obtenerEjercicios();
+    else if (seleccion.equals("Abdominales")) lista = EjercicioAbdominales.obtenerEjercicios();
+    else if (seleccion.equals("Piernas")) lista = EjercicioPiernas.obtenerEjercicios();
+    else if (seleccion.equals("Hombros")) lista = EjercicioHombros.obtenerEjercicios();
 
-        if (lista.isEmpty()) return;
+    if (lista.isEmpty()) return;
 
-        String[] nombres = lista.stream().map(e -> e.nombre).toArray(String[]::new);
-        String elegido = (String) JOptionPane.showInputDialog(null, "Seleccione ejercicio:",
-                "Ejercicios de " + seleccion, JOptionPane.QUESTION_MESSAGE, null, nombres, nombres[0]);
-        if (elegido == null) return;
+    String[] nombres = lista.stream().map(Ejercicio::getNombre).toArray(String[]::new);
+    String elegido = (String) JOptionPane.showInputDialog(
+            null,
+            "Seleccione ejercicio:",
+            "Ejercicios de " + seleccion,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            nombres,
+            nombres[0]
+    );
+    if (elegido == null) return;
 
-        for (Ejercicio e : lista) {
-            if (e.nombre.equals(elegido)) {
-                int confirmar = JOptionPane.showConfirmDialog(null, e.nombre + "\n" + e.descripcion +
-                        "\n\n¿Desea añadir este ejercicio a su rutina?", "Detalle del ejercicio", JOptionPane.YES_NO_OPTION);
-                if (confirmar == JOptionPane.YES_OPTION) {
-                    rutina.add(e);
-                    JOptionPane.showMessageDialog(null, "Ejercicio agregado a la rutina");
+    for (Ejercicio e : lista) {
+        if (e.getNombre().equals(elegido)) {
+            
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+            JLabel lblNombre = new JLabel("<html><h2>" + e.getNombre() + "</h2></html>");
+            JLabel lblDescripcion = new JLabel("<html><p style='width:250px;'>" + e.getDescripcion() + "</p></html>");
+
+            JLabel lblImagen = new JLabel();
+            try {
+                java.net.URL imgURL = MainApp.class.getResource(e.getRutaImagen());
+                if (imgURL != null) {
+                    ImageIcon icon = new ImageIcon(imgURL);
+                    Image img = icon.getImage().getScaledInstance(250, 200, Image.SCALE_SMOOTH);
+                    lblImagen.setIcon(new ImageIcon(img));
+                } else {
+                    lblImagen.setText("Imagen no disponible");
                 }
-                break;
+            } catch (Exception ex) {
+                lblImagen.setText("Error al cargar imagen");
             }
+
+            JLabel lblConfirmacion = new JLabel("¿Desea agregar este ejercicio a la rutina?");
+            lblConfirmacion.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+
+            panel.add(lblNombre);
+            panel.add(lblDescripcion);
+            panel.add(lblImagen);
+            panel.add(lblConfirmacion);
+
+            int confirmar = JOptionPane.showConfirmDialog(
+                    null,
+                    panel,
+                    "Detalle del ejercicio",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.PLAIN_MESSAGE
+            );
+
+            if (confirmar == JOptionPane.YES_OPTION) {
+                rutina.add(e);
+                JOptionPane.showMessageDialog(null, "Ejercicio agregado a la rutina");
+            }
+            break;
         }
     }
+}
+
 
     public static void verRutina() {
         if (rutina.isEmpty()) {
