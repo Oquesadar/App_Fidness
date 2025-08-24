@@ -18,6 +18,10 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.*;
 
 class MainApp {
     
@@ -32,17 +36,39 @@ class MainApp {
     }
 
     public static void mostrarInicioSesion() {
-        while (true) {
-            String[] opciones = {"Iniciar sesión", "Registrarse", "Salir"};
-            int opcion = JOptionPane.showOptionDialog(null, "Bienvenido a Fidness", "Inicio",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                    null, opciones, opciones[0]);
+    while (true) {
+        
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
 
-            if (opcion == 0) iniciarSesion();
-            else if (opcion == 1) registrarUsuario();
-            else break;
-        }
+        
+        JLabel titulo = new JLabel("Gimnasio Fidness", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 22));
+        titulo.setForeground(new Color(0, 0, 139));
+        panel.add(titulo, BorderLayout.NORTH);
+
+        
+        JLabel mensaje = new JLabel("Seleccione una opción:", SwingConstants.CENTER);
+        panel.add(mensaje, BorderLayout.CENTER);
+
+        
+        String[] opciones = {"Iniciar sesión", "Registrarse", "Salir"};
+
+        int opcion = JOptionPane.showOptionDialog(
+                null, 
+                panel, 
+                "Inicio", 
+                JOptionPane.DEFAULT_OPTION, 
+                JOptionPane.INFORMATION_MESSAGE,
+                null, 
+                opciones, 
+                opciones[0]
+        );
+
+        if (opcion == 0) iniciarSesion();
+        else if (opcion == 1) registrarUsuario();
+        else break;
     }
+}
 
     public static void registrarUsuario() {
         String nombreUsuario = JOptionPane.showInputDialog("Ingrese el nombre del usuario:");
@@ -57,13 +83,13 @@ class MainApp {
         String comando = String.join(";", "REGISTRO", nombreUsuario, contrasena, nombreCompleto, correo);
         String respuesta = cliente.enviar(comando);
 
-        if (respuesta != null && respuesta.startsWith("OK")) {
-            JOptionPane.showMessageDialog(null, "El usuario fue registrado correctamente");
-        } else {
-            String msg = (respuesta == null) ? "Respuesta nula" : respuesta;
-            JOptionPane.showMessageDialog(null, "Error en registro: " + msg);
-        }
+        if (respuesta != null && (respuesta.startsWith("OK") || respuesta.contains("correctamente"))) {
+        JOptionPane.showMessageDialog(null, "El usuario fue registrado correctamente");
+    } else {
+        String msg = (respuesta == null) ? "Respuesta nula" : respuesta;
+        JOptionPane.showMessageDialog(null, "Error en registro: " + msg);
     }
+}
 
     public static void iniciarSesion() {
         String usuario = JOptionPane.showInputDialog("Usuario:");
@@ -89,18 +115,40 @@ class MainApp {
     }
 
     public static void mostrarMenuPrincipal() {
-        while (true) {
-            String[] opciones = {"Seleccionar grupo muscular", "Ver rutina", "Exportar rutina", "Cerrar sesión"};
-            int opcion = JOptionPane.showOptionDialog(null, "Bienvenido/a " + usuarioActual.getNombreCompleto(), "Menú Principal",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                    null, opciones, opciones[0]);
+    while (true) {
+        
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        
+        panel.setBackground(new Color(0xFFCC4D));
+        
+        JLabel titulo = new JLabel("Gimnasio Fidness", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 22));
+        titulo.setForeground(new Color(0, 0, 139));
+        panel.add(titulo, BorderLayout.NORTH);
 
-            if (opcion == 0) seleccionarGrupoMuscular();
-            else if (opcion == 1) verRutina();
-            else if (opcion == 2) exportarRutina();
-            else break;
-        }
+        JLabel bienvenida = new JLabel("Bienvenido/a " + usuarioActual.getNombreCompleto(), SwingConstants.CENTER);
+        panel.add(bienvenida, BorderLayout.CENTER);
+
+       
+        String[] opciones = {"Seleccionar grupo muscular", "Ver rutina", "Exportar rutina", "Cerrar sesión"};
+
+        int opcion = JOptionPane.showOptionDialog(
+                null,
+                panel,
+                "Menú Principal",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+        );
+
+        if (opcion == 0) seleccionarGrupoMuscular();
+        else if (opcion == 1) verRutina();
+        else if (opcion == 2) exportarRutina();
+        else break;
     }
+}
 
     public static void seleccionarGrupoMuscular() {
     String[] grupos = {"Pecho", "Espalda", "Brazos", "Abdominales", "Piernas", "Hombros"};
@@ -160,7 +208,7 @@ class MainApp {
                 lblImagen.setText("Error al cargar imagen");
             }
 
-            JLabel lblConfirmacion = new JLabel("¿Desea agregar este ejercicio a la rutina?");
+            JLabel lblConfirmacion = new JLabel("¿Agregar ejercicio a la rutina?");
             lblConfirmacion.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
             panel.add(lblNombre);
